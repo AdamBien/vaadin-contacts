@@ -1,5 +1,6 @@
-package com.vaadin.contacts.services;
+package com.vaadin.contacts.business.contactstore.boundary;
 
+import com.vaadin.contacts.business.contactstore.entity.Contact;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

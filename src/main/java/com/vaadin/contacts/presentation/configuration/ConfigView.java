@@ -1,4 +1,4 @@
-package com.vaadin.contacts.views.configuration;
+package com.vaadin.contacts.presentation.configuration;
 
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;

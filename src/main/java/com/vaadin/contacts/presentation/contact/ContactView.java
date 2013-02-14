@@ -1,11 +1,11 @@
-package com.vaadin.contacts.views.contact;
+package com.vaadin.contacts.presentation.contact;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import com.vaadin.contacts.services.Contact;
+import com.vaadin.contacts.business.contactstore.entity.Contact;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;

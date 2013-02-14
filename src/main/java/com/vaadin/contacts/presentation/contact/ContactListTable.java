@@ -1,8 +1,8 @@
-package com.vaadin.contacts.views.contact;
+package com.vaadin.contacts.presentation.contact;
 
 import javax.inject.Inject;
 
-import com.vaadin.contacts.services.Contact;
+import com.vaadin.contacts.business.contactstore.entity.Contact;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;

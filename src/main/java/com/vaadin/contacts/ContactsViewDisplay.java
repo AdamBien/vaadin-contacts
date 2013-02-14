@@ -1,6 +1,6 @@
 package com.vaadin.contacts;
 
-import com.vaadin.contacts.views.contact.Presenter;
+import com.vaadin.contacts.presentation.contact.Presenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.ui.CustomComponent;

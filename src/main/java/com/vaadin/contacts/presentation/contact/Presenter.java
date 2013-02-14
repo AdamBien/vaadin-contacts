@@ -1,4 +1,4 @@
-package com.vaadin.contacts.views.contact;
+package com.vaadin.contacts.presentation.contact;
 
 import com.vaadin.ui.Component;
 

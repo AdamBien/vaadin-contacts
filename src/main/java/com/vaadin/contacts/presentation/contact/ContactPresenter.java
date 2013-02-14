@@ -1,9 +1,9 @@
-package com.vaadin.contacts.views.contact;
+package com.vaadin.contacts.presentation.contact;
 
 import com.vaadin.cdi.VaadinView;
 
-import com.vaadin.contacts.services.Contact;
-import com.vaadin.contacts.services.ContactService;
+import com.vaadin.contacts.business.contactstore.entity.Contact;
+import com.vaadin.contacts.business.contactstore.boundary.ContactService;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;

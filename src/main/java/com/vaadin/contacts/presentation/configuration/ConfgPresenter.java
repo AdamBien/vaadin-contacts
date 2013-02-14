@@ -1,7 +1,7 @@
-package com.vaadin.contacts.views.configuration;
+package com.vaadin.contacts.presentation.configuration;
 
 import com.vaadin.cdi.VaadinView;
-import com.vaadin.contacts.views.contact.Presenter;
+import com.vaadin.contacts.presentation.contact.Presenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Component;

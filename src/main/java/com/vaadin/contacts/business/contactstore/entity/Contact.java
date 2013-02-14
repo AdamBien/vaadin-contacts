@@ -1,4 +1,4 @@
-package com.vaadin.contacts.services;
+package com.vaadin.contacts.business.contactstore.entity;
 
 public class Contact {
 
