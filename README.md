@@ -5,16 +5,15 @@ Vaadin 7 / Java EE 6 Sample Application
 
 # Installation
 
-1. Build vaadin-cdi-integration:
+## Build vaadin-cdi-integration:
 
-git clone https://github.com/vaadin/vaadin-cdi-integration.git
-cd vaadin-cdi-integration
-mvn clean install
+1. git clone https://github.com/vaadin/vaadin-cdi-integration.git
+2. cd vaadin-cdi-integration
+3. mvn clean install
 
-2. Build vaadin-contacts:
+## Build vaadin-contacts:
 
-git clone https://github.com/AdamBien/vaadin-contacts.git
-cd vaadin-contacts
-mvn clean install
-
-Deploy ./target/vaadin-contacts.war to your favorite server.
+1. git clone https://github.com/AdamBien/vaadin-contacts.git
+2. cd vaadin-contacts
+3. mvn clean install
+4. Deploy ./target/vaadin-contacts.war to your favorite server.
