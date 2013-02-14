@@ -27,6 +27,11 @@ public class InstanceTracker {
         context.proceed();
     }
 
+    /**
+     * Is only invoked in case the intercepted component also implements a
+     *
+     * @PreDestroy callback
+     */
     @PreDestroy
     public void onDestroy(InvocationContext context) throws Exception {
         Object target = context.getTarget();
