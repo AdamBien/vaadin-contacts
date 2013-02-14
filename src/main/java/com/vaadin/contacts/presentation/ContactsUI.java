@@ -1,4 +1,4 @@
-package com.vaadin.contacts;
+package com.vaadin.contacts.presentation;
 
 import javax.inject.Inject;
 
@@ -6,6 +6,7 @@ import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.cdi.CDIViewProvider;
 import com.vaadin.cdi.Root;
 import com.vaadin.cdi.VaadinUI;
+import com.vaadin.contacts.InstanceTracker;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
@@ -13,10 +14,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import javax.interceptor.Interceptors;
 
 @VaadinUI
 @Root
 @PreserveOnRefresh
+@Interceptors(InstanceTracker.class)
 public class ContactsUI extends UI {
 
     private static final long serialVersionUID = 1960302824189438305L;

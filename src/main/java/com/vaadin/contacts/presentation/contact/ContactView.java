@@ -1,5 +1,6 @@
 package com.vaadin.contacts.presentation.contact;
 
+import com.vaadin.contacts.InstanceTracker;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +11,9 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalSplitPanel;
+import javax.interceptor.Interceptors;
 
+@Interceptors(InstanceTracker.class)
 public class ContactView extends CustomComponent {
 
     private static final long serialVersionUID = 3377127145341022124L;

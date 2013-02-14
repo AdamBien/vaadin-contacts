@@ -1,6 +1,7 @@
 package com.vaadin.contacts.presentation.contact;
 
 import com.vaadin.cdi.VaadinView;
+import com.vaadin.contacts.InstanceTracker;
 
 import com.vaadin.contacts.business.contactstore.entity.Contact;
 import com.vaadin.contacts.business.contactstore.boundary.ContactService;
@@ -11,7 +12,9 @@ import com.vaadin.ui.Component;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
 
+@Interceptors(InstanceTracker.class)
 @RequestScoped
 @VaadinView("main")
 public class ContactPresenter implements View, Presenter {

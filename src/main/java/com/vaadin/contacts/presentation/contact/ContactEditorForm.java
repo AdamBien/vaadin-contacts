@@ -1,5 +1,6 @@
 package com.vaadin.contacts.presentation.contact;
 
+import com.vaadin.contacts.InstanceTracker;
 import javax.inject.Inject;
 
 import com.vaadin.contacts.business.contactstore.entity.Contact;
@@ -15,7 +16,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import javax.interceptor.Interceptors;
 
+@Interceptors(InstanceTracker.class)
 public class ContactEditorForm extends CustomComponent {
 
     private static final long serialVersionUID = -3687729087771335040L;
