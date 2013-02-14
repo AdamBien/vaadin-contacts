@@ -3,9 +3,6 @@ package com.vaadin.contacts.views.contact;
 import javax.inject.Inject;
 
 import com.vaadin.contacts.services.Contact;
-import com.vaadin.contacts.views.contact.event.ContactCreatedEvent;
-import com.vaadin.contacts.views.contact.event.ContactRemovedEvent;
-import com.vaadin.contacts.views.contact.event.ContactSelectedEvent;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;

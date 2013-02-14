@@ -1,14 +1,9 @@
 package com.vaadin.contacts.views.contact;
 
 import com.vaadin.cdi.VaadinView;
-import javax.enterprise.event.Observes;
 
 import com.vaadin.contacts.services.Contact;
 import com.vaadin.contacts.services.ContactService;
-import com.vaadin.contacts.views.contact.event.ContactCreatedEvent;
-import com.vaadin.contacts.views.contact.event.ContactRemovedEvent;
-import com.vaadin.contacts.views.contact.event.ContactSavedEvent;
-import com.vaadin.contacts.views.contact.event.ContactSelectedEvent;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;

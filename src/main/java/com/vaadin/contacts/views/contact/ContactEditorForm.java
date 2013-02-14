@@ -3,7 +3,6 @@ package com.vaadin.contacts.views.contact;
 import javax.inject.Inject;
 
 import com.vaadin.contacts.services.Contact;
-import com.vaadin.contacts.views.contact.event.ContactSavedEvent;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.fieldgroup.PropertyId;
@@ -19,128 +18,117 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ContactEditorForm extends CustomComponent {
 
-	private static final long serialVersionUID = -3687729087771335040L;
+    private static final long serialVersionUID = -3687729087771335040L;
+    private FieldGroup fieldGroup;
+    @PropertyId("firstName")
+    private TextField firstName;
+    @PropertyId("lastName")
+    private TextField lastName;
+    @PropertyId("city")
+    private TextField city;
+    @PropertyId("zipCode")
+    private TextField zipCode;
+    @PropertyId("comment")
+    private TextArea comment;
+    @Inject
+    ContactPresenter presenter;
+    private Button.ClickListener saveListener = new Button.ClickListener() {
+        private static final long serialVersionUID = 6828226158238147870L;
 
-	private FieldGroup fieldGroup;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            try {
+                fieldGroup.commit();
+                presenter.onContactSaved(contact);
+            } catch (CommitException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    private Button.ClickListener cancelListener = new Button.ClickListener() {
+        private static final long serialVersionUID = 491742619788793193L;
 
-	@PropertyId("firstName")
-	private TextField firstName;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            fieldGroup.discard();
+        }
+    };
+    private Button save;
+    private Contact contact;
 
-	@PropertyId("lastName")
-	private TextField lastName;
+    public ContactEditorForm() {
+        setSizeFull();
 
-	@PropertyId("city")
-	private TextField city;
+        VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(true);
+        layout.setSizeFull();
 
-	@PropertyId("zipCode")
-	private TextField zipCode;
+        setCompositionRoot(layout);
 
-	@PropertyId("comment")
-	private TextArea comment;
+        fieldGroup = new FieldGroup();
+        fieldGroup.setBuffered(true);
 
-	@Inject
-	private javax.enterprise.event.Event<ContactSavedEvent> contactSavedEvent;
+        FormLayout formLayout = new FormLayout();
+        formLayout.setSizeFull();
 
-	private Button.ClickListener saveListener = new Button.ClickListener() {
-		private static final long serialVersionUID = 6828226158238147870L;
+        firstName = new TextField("First name");
+        firstName.setNullRepresentation("");
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			try {
-				fieldGroup.commit();
-				contactSavedEvent.fire(new ContactSavedEvent(contact));
-			} catch (CommitException e) {
-				e.printStackTrace();
-			}
-		}
-	};
+        lastName = new TextField("Last name");
+        lastName.setNullRepresentation("");
 
-	private Button.ClickListener cancelListener = new Button.ClickListener() {
-		private static final long serialVersionUID = 491742619788793193L;
+        city = new TextField("City");
+        city.setNullRepresentation("");
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			fieldGroup.discard();
-		}
-	};
+        zipCode = new TextField("Zip code");
+        zipCode.setNullRepresentation("");
 
-	private Button save;
+        comment = new TextArea("Comment");
+        comment.setNullRepresentation("");
 
-	private Contact contact;
+        layout.addComponent(firstName);
+        layout.addComponent(lastName);
+        layout.addComponent(city);
+        layout.addComponent(zipCode);
+        layout.addComponent(comment);
 
-	public ContactEditorForm() {
-		setSizeFull();
+        HorizontalLayout buttonLayout = new HorizontalLayout();
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setMargin(true);
-		layout.setSizeFull();
+        save = new Button("Save", saveListener);
 
-		setCompositionRoot(layout);
+        buttonLayout.addComponent(save);
+        buttonLayout.addComponent(new Button("Cancel", cancelListener));
 
-		fieldGroup = new FieldGroup();
-		fieldGroup.setBuffered(true);
+        layout.addComponent(formLayout);
+        layout.addComponent(buttonLayout);
 
-		FormLayout formLayout = new FormLayout();
-		formLayout.setSizeFull();
+        layout.setExpandRatio(formLayout, 1);
+        layout.setSpacing(true);
 
-		firstName = new TextField("First name");
-		firstName.setNullRepresentation("");
+        setEnabled(false);
+    }
 
-		lastName = new TextField("Last name");
-		lastName.setNullRepresentation("");
+    public void populateContact(BeanItem<Contact> contactItem) {
+        if (contactItem == null) {
+            clear();
+            return;
+        }
 
-		city = new TextField("City");
-		city.setNullRepresentation("");
+        setEnabled(contactItem != null);
 
-		zipCode = new TextField("Zip code");
-		zipCode.setNullRepresentation("");
+        this.contact = contactItem.getBean();
 
-		comment = new TextArea("Comment");
-		comment.setNullRepresentation("");
+        fieldGroup.setItemDataSource(contactItem);
+        fieldGroup.bindMemberFields(this);
+    }
 
-		layout.addComponent(firstName);
-		layout.addComponent(lastName);
-		layout.addComponent(city);
-		layout.addComponent(zipCode);
-		layout.addComponent(comment);
+    public void clear() {
+        setEnabled(false);
 
-		HorizontalLayout buttonLayout = new HorizontalLayout();
-
-		save = new Button("Save", saveListener);
-
-		buttonLayout.addComponent(save);
-		buttonLayout.addComponent(new Button("Cancel", cancelListener));
-
-		layout.addComponent(formLayout);
-		layout.addComponent(buttonLayout);
-
-		layout.setExpandRatio(formLayout, 1);
-		layout.setSpacing(true);
-
-		setEnabled(false);
-	}
-
-	public void populateContact(BeanItem<Contact> contactItem) {
-		if (contactItem == null) {
-			clear();
-			return;
-		}
-
-		setEnabled(contactItem != null);
-
-		this.contact = contactItem.getBean();
-
-		fieldGroup.setItemDataSource(contactItem);
-		fieldGroup.bindMemberFields(this);
-	}
-
-	public void clear() {
-		setEnabled(false);
-
-		firstName.setValue(null);
-		lastName.setValue(null);
-		zipCode.setValue(null);
-		city.setValue(null);
-		comment.setValue(null);
-	}
+        firstName.setValue(null);
+        lastName.setValue(null);
+        zipCode.setValue(null);
+        city.setValue(null);
+        comment.setValue(null);
+    }
 }
