@@ -43,13 +43,13 @@ public class ContactsUI extends UI {
 
         viewDisplay = new ContactsViewDisplay();
 
-        //  navigator = new Navigator(this, viewDisplay);
-        // navigator.addProvider(viewProvider);
+        navigator = new Navigator(this, viewDisplay);
+        navigator.addProvider(viewProvider);
 
         splitPanel.setFirstComponent(buildMenu());
         splitPanel.setSecondComponent(viewDisplay);
 
-        //navigator.navigateTo("main");
+        navigator.navigateTo("main");
     }
 
     private VerticalLayout buildMenu() {
