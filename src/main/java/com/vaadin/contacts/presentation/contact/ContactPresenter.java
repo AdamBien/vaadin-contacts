@@ -36,23 +36,23 @@ public class ContactPresenter implements View, Presenter {
         this.view.clearContactEditor();
     }
 
-    protected void onContactSaved(
+    public void contactSaved(
             Contact contactSaved) {
         contactService.storeContact(contactSaved);
         this.view.populateContacts(contactService.getContacts());
         this.view.clearContactEditor();
     }
 
-    protected void onContactSelected(BeanItem<Contact> contactSelected) {
+    public void contactSelected(BeanItem<Contact> contactSelected) {
         this.view.editContact(contactSelected);
     }
 
-    protected void onContactCreated() {
+    public void contactCreated() {
         Contact newContact = contactService.createContact();
         this.view.editContact(new BeanItem<>(newContact));
     }
 
-    protected void onContactRemoved(Contact contactRemoved) {
+    public void contactRemoved(Contact contactRemoved) {
         contactService.removeContact(contactRemoved);
         this.view.populateContacts(contactService.getContacts());
         this.view.clearContactEditor();

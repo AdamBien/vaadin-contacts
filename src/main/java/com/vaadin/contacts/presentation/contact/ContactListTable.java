@@ -28,7 +28,7 @@ public class ContactListTable extends CustomComponent {
 
         @Override
         public void buttonClick(ClickEvent event) {
-            presenter.onContactCreated();
+            presenter.contactCreated();
         }
     };
     private Button.ClickListener removeContactListener = new Button.ClickListener() {
@@ -38,7 +38,7 @@ public class ContactListTable extends CustomComponent {
         public void buttonClick(ClickEvent event) {
             BeanItem<Contact> selectedContact = getSelectedContact();
             if (selectedContact != null) {
-                presenter.onContactRemoved(selectedContact.getBean());
+                presenter.contactRemoved(selectedContact.getBean());
             }
         }
     };
@@ -47,7 +47,7 @@ public class ContactListTable extends CustomComponent {
 
         @Override
         public void valueChange(ValueChangeEvent event) {
-            presenter.onContactSelected(getSelectedContact());
+            presenter.contactSelected(getSelectedContact());
 
             removeContactButton.setEnabled(getSelectedContact() != null);
         }

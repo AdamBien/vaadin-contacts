@@ -42,7 +42,7 @@ public class ContactEditorForm extends CustomComponent {
         public void buttonClick(ClickEvent event) {
             try {
                 fieldGroup.commit();
-                presenter.onContactSaved(contact);
+                presenter.contactSaved(contact);
             } catch (CommitException e) {
                 e.printStackTrace();
             }
