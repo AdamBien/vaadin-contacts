@@ -1,64 +1,68 @@
 package com.vaadin.contacts.views.contact;
 
-import java.io.Serializable;
-
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.Reception;
 
 import com.vaadin.contacts.services.Contact;
 import com.vaadin.contacts.services.ContactService;
-import com.vaadin.contacts.views.AbstractPresenter;
 import com.vaadin.contacts.views.contact.event.ContactCreatedEvent;
 import com.vaadin.contacts.views.contact.event.ContactRemovedEvent;
 import com.vaadin.contacts.views.contact.event.ContactSavedEvent;
 import com.vaadin.contacts.views.contact.event.ContactSelectedEvent;
 import com.vaadin.data.util.BeanItem;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
 
 @RequestScoped
-public class ContactPresenter extends AbstractPresenter<ContactView> implements
-        Serializable {
+public class ContactPresenter {
 
     private static final long serialVersionUID = -9009785741381662646L;
-    @EJB
-    private ContactService contactService;
+    @Inject
+    ContactService contactService;
+    ContactView view;
 
-    public void viewInitialized(ContactView view) {
-        setView(view);
+    public ContactPresenter() {
+    }
 
-        getView().populateContacts(contactService.getContacts());
+    @Inject
+    public ContactPresenter(ContactView view) {
+        this.view = view;
+    }
+
+    @PostConstruct
+    public void viewInitialized() {
+        this.view.populateContacts(contactService.getContacts());
     }
 
     protected void onContactSaved(
-            @Observes(notifyObserver = Reception.IF_EXISTS) ContactSavedEvent contactSaved) {
+            @Observes ContactSavedEvent contactSaved) {
         contactService.storeContact(contactSaved.getContact());
-        getView().populateContacts(contactService.getContacts());
-        getView().clearContactEditor();
+        this.view.populateContacts(contactService.getContacts());
+        this.view.clearContactEditor();
     }
 
     protected void onContactSelected(
-            @Observes(notifyObserver = Reception.IF_EXISTS) ContactSelectedEvent contactSelected) {
-        getView().editContact(contactSelected.getSelectedContact());
+            @Observes ContactSelectedEvent contactSelected) {
+        this.view.editContact(contactSelected.getSelectedContact());
     }
 
     protected void onContactCreated(
-            @Observes(notifyObserver = Reception.IF_EXISTS) ContactCreatedEvent contactCreated) {
+            @Observes ContactCreatedEvent contactCreated) {
         Contact newContact = contactService.createContact();
-        getView().editContact(new BeanItem<Contact>(newContact));
+        this.view.editContact(new BeanItem<>(newContact));
     }
 
     protected void onContactRemoved(
-            @Observes(notifyObserver = Reception.IF_EXISTS) ContactRemovedEvent contactRemoved) {
+            @Observes ContactRemovedEvent contactRemoved) {
         contactService.removeContact(contactRemoved.getContact());
-        getView().populateContacts(contactService.getContacts());
-        getView().clearContactEditor();
+        this.view.populateContacts(contactService.getContacts());
+        this.view.clearContactEditor();
     }
 
-    @Override
     public void viewEntered() {
-        getView().populateContacts(contactService.getContacts());
-        getView().clearContactEditor();
+        this.view.populateContacts(contactService.getContacts());
+        this.view.clearContactEditor();
     }
 }
