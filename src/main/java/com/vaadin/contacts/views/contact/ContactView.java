@@ -11,11 +11,14 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalSplitPanel;
+import javax.enterprise.context.RequestScoped;
 
+@RequestScoped
 @VaadinView("main")
-public class ContactView extends CustomComponent implements View {
+public class ContactView implements View {
 
     private static final long serialVersionUID = 3377127145341022124L;
     @Inject
@@ -25,19 +28,17 @@ public class ContactView extends CustomComponent implements View {
     @Inject
     private ContactPresenter presenter;
     private VerticalSplitPanel verticalSplit;
+    @Inject
+    private CustomView root;
 
-    public ContactView() {
-        System.out.println("New instance of " + this);
-        setSizeFull();
+    @PostConstruct
+    protected void init() {
+        root.setSizeFull();
 
         verticalSplit = new VerticalSplitPanel();
         verticalSplit.setSizeFull();
 
-        setCompositionRoot(verticalSplit);
-    }
-
-    @PostConstruct
-    protected void init() {
+        root.setCompositionRoot(verticalSplit);
         verticalSplit.setFirstComponent(contactTable);
         verticalSplit.setSecondComponent(editorForm);
     }
@@ -61,5 +62,14 @@ public class ContactView extends CustomComponent implements View {
 
     public void clearContactEditor() {
         editorForm.clear();
+    }
+
+    public Component getComponent() {
+        return this.root;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactView{" + "presenter=" + presenter + '}';
     }
 }

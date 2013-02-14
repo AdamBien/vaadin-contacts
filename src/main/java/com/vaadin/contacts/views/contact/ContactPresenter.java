@@ -1,7 +1,6 @@
 package com.vaadin.contacts.views.contact;
 
 import javax.enterprise.event.Observes;
-import javax.enterprise.event.Reception;
 
 import com.vaadin.contacts.services.Contact;
 import com.vaadin.contacts.services.ContactService;
@@ -12,19 +11,14 @@ import com.vaadin.contacts.views.contact.event.ContactSelectedEvent;
 import com.vaadin.data.util.BeanItem;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-@RequestScoped
 public class ContactPresenter {
 
     private static final long serialVersionUID = -9009785741381662646L;
     @Inject
     ContactService contactService;
     ContactView view;
-
-    public ContactPresenter() {
-    }
 
     @Inject
     public ContactPresenter(ContactView view) {
