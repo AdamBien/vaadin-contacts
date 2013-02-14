@@ -19,86 +19,72 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ContactListTable extends CustomComponent {
 
-	private static final long serialVersionUID = -7480183573283968676L;
+    private static final long serialVersionUID = -7480183573283968676L;
+    @Inject
+    ContactPresenter presenter;
+    private Table table;
+    private Button.ClickListener addContactListener = new Button.ClickListener() {
+        private static final long serialVersionUID = -6696133062819506323L;
 
-	@Inject
-	private javax.enterprise.event.Event<ContactSelectedEvent> contactSelectedEvent;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            presenter.onContactCreated();
+        }
+    };
+    private Button.ClickListener removeContactListener = new Button.ClickListener() {
+        private static final long serialVersionUID = 1972610062708878635L;
 
-	@Inject
-	private javax.enterprise.event.Event<ContactCreatedEvent> contactCreatedEvent;
+        @Override
+        public void buttonClick(ClickEvent event) {
+            presenter.onContactRemoved(null);
+        }
+    };
+    private ValueChangeListener tableValueChangeListener = new ValueChangeListener() {
+        private static final long serialVersionUID = -1395661949618344282L;
 
-	@Inject
-	private javax.enterprise.event.Event<ContactRemovedEvent> contactRemovedEvent;
+        @Override
+        public void valueChange(ValueChangeEvent event) {
+            presenter.onContactSelected(getSelectedContact());
 
-	private Table table;
+            removeContactButton.setEnabled(getSelectedContact() != null);
+        }
+    };
+    private Button removeContactButton;
 
-	private Button.ClickListener addContactListener = new Button.ClickListener() {
-		private static final long serialVersionUID = -6696133062819506323L;
+    public ContactListTable() {
+        setSizeFull();
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			contactCreatedEvent.fire(new ContactCreatedEvent());
-		}
-	};
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSizeFull();
 
-	private Button.ClickListener removeContactListener = new Button.ClickListener() {
-		private static final long serialVersionUID = 1972610062708878635L;
+        setCompositionRoot(layout);
 
-		@Override
-		public void buttonClick(ClickEvent event) {
-			contactRemovedEvent.fire(new ContactRemovedEvent(
-					getSelectedContact().getBean()));
-		}
-	};
+        table = new Table();
+        table.setSizeFull();
+        table.setImmediate(true);
+        table.setSelectable(true);
+        table.addValueChangeListener(tableValueChangeListener);
 
-	private ValueChangeListener tableValueChangeListener = new ValueChangeListener() {
-		private static final long serialVersionUID = -1395661949618344282L;
+        removeContactButton = new Button("Remove contact",
+                removeContactListener);
+        removeContactButton.setEnabled(false);
 
-		@Override
-		public void valueChange(ValueChangeEvent event) {
-			contactSelectedEvent.fire(new ContactSelectedEvent(
-					getSelectedContact()));
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout
+                .addComponent(new Button("Add contact", addContactListener));
+        buttonLayout.addComponent(removeContactButton);
 
-			removeContactButton.setEnabled(getSelectedContact() != null);
-		}
-	};
+        layout.addComponent(table);
+        layout.addComponent(buttonLayout);
+        layout.setExpandRatio(table, 1);
+    }
 
-	private Button removeContactButton;
+    @SuppressWarnings("unchecked")
+    public BeanItem<Contact> getSelectedContact() {
+        return (BeanItem<Contact>) table.getItem(table.getValue());
+    }
 
-	public ContactListTable() {
-		setSizeFull();
-
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
-
-		setCompositionRoot(layout);
-
-		table = new Table();
-		table.setSizeFull();
-		table.setImmediate(true);
-		table.setSelectable(true);
-		table.addValueChangeListener(tableValueChangeListener);
-
-		removeContactButton = new Button("Remove contact",
-				removeContactListener);
-		removeContactButton.setEnabled(false);
-
-		HorizontalLayout buttonLayout = new HorizontalLayout();
-		buttonLayout
-				.addComponent(new Button("Add contact", addContactListener));
-		buttonLayout.addComponent(removeContactButton);
-
-		layout.addComponent(table);
-		layout.addComponent(buttonLayout);
-		layout.setExpandRatio(table, 1);
-	}
-
-	@SuppressWarnings("unchecked")
-	public BeanItem<Contact> getSelectedContact() {
-		return (BeanItem<Contact>) table.getItem(table.getValue());
-	}
-
-	public void setContainerDatasource(BeanItemContainer<Contact> container) {
-		table.setContainerDataSource(container);
-	}
+    public void setContainerDatasource(BeanItemContainer<Contact> container) {
+        table.setContainerDataSource(container);
+    }
 }

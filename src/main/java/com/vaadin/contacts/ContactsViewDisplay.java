@@ -1,9 +1,8 @@
 package com.vaadin.contacts;
 
-import com.vaadin.contacts.views.contact.ContactView;
+import com.vaadin.contacts.views.contact.Presenter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 
 public class ContactsViewDisplay extends CustomComponent implements ViewDisplay {
@@ -16,6 +15,6 @@ public class ContactsViewDisplay extends CustomComponent implements ViewDisplay 
 
     @Override
     public void showView(View view) {
-        setCompositionRoot(((ContactView) view).getComponent());
+        setCompositionRoot(((Presenter) view).getView());
     }
 }
