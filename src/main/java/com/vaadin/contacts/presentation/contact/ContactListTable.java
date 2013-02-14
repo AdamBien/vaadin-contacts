@@ -36,7 +36,10 @@ public class ContactListTable extends CustomComponent {
 
         @Override
         public void buttonClick(ClickEvent event) {
-            presenter.onContactRemoved(null);
+            BeanItem<Contact> selectedContact = getSelectedContact();
+            if (selectedContact != null) {
+                presenter.onContactRemoved(selectedContact.getBean());
+            }
         }
     };
     private ValueChangeListener tableValueChangeListener = new ValueChangeListener() {
