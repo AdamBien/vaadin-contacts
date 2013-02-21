@@ -79,7 +79,7 @@
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>7.0.0.rc2</vaadin.version>
+        <vaadin.version>7.0.1</vaadin.version>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 </project>
